@@ -1,0 +1,94 @@
+* todo
+** TODO finish creating chat frontend
+*** DONE analyze what needs to be done 
+    CLOSED: [2018-09-15 Sat 22:39]
+** DONE understand polymorphism (can I implement it)
+   CLOSED: [2018-09-19 Wed 22:43]
+** DONE understand model-view-controlled (can I implement it)
+   CLOSED: [2018-09-25 Tue 22:02]
+*** DONE fix bugs left in mvc example
+    CLOSED: [2018-09-28 Fri 12:32]
+**** DONE separate view from model, only contact should be controller
+     CLOSED: [2018-09-25 Tue 22:02]
+**** DONE figure out the whole mess with pointers and references
+     CLOSED: [2018-09-25 Tue 22:02]
+** TODO make org file for normal stuff (i.e. homework), set it to open at annoying times 
+** TODO read and understand poco documentation
+*** TODO understand network/websocket api
+*** TODO understand json api (read from memory, or only from file?)
+** TODO understand connectToServer
+* C++ Frontend Analysis
+** Client 
+*** did I connect to the server correctly
+*** can I read json correctly (from memory)
+** Class
+*** need abstract class for the guis
+**** qt and ncurses
+*** maybe need class for normal things (I think so)
+
+** Model View Controller
+*** Model
+**** Handles data, does not care how it is represented, simply receives and sends it.
+**** Independent of View and Controller
+*** View 
+**** Knows how to present data to user
+**** needs access to Model and to define 'Render' function
+*** Controller
+**** Takes input from user and sends to other two
+**** asks model to update data or view to update look
+*** example
+* Node backend analysis
+does anything else need to be added?
+** TODO check up on security of server
+** TODO check quality of middleware for server 
+
+* Model View Controller specific
+** Model
+*** needs to set/get username
+*** set/get users present?
+*** set/get message
+**** set message text to blank after
+*** set/get history?
+*** Needs to be able to talk to server
+**** different class for network
+***** set/get information 
+** View 
+*** display message box 
+*** display username input
+*** display received messages
+*** display users present
+** Controller
+*** send username to model
+*** send messages to user
+*** send username to view
+*** send messages to view 
+*** perform any other event handlers
+** Network 
+*** needs to know when new user joins, alert (model/controller)
+*** needs to (read/access) configuration
+**** get address, port, uri
+*** 
+
+* Plan
+when new user joins, add names to array, increase count of users present
+Model alerted to new users by network class
+When server receives username, name is sent to all clients. Clients must add name to vector
+Client will know based off of json tags, who is a user vs other stuff, like messages
+                                                                                                      
+
+* Client.h
+** parse json tags to determine what is message, user, etc
+*** if message: pass to model with get message method
+*** if new user: pass to model with get new user method
+** connect to server
+*** handle errors
+**** if json doesn't have correct keys/values: print entire json to error file
+*** send disconnect
+
+* Deadline today
+** finish client.h
+** rename to network.h
+** begin testing network.h with virtual network
+
+client needs to send all messages to model
+Model needs to distinguish between local user message (to be sent) and remote user message (to be printed)
