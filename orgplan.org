@@ -92,3 +92,12 @@ Client will know based off of json tags, who is a user vs other stuff, like mess
 
 client needs to send all messages to model
 Model needs to distinguish between local user message (to be sent) and remote user message (to be printed)
+
+
+if type is message, set a tuple with name and message, pass to setRemoteUserMessage
+change setRemoteUserMessage to accept tuple of strings
+push into vector of tuples
+
+
+use stringify to print entire object to error file
+needs ostream, put ostream in file?

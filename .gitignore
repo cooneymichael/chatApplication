@@ -1,5 +1,7 @@
 server/**
 **~
 \#*\#
-
-
+a.out
+temp.cpp*
+error.txt
+**.gch
