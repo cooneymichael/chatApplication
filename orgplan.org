@@ -13,10 +13,12 @@
 **** DONE figure out the whole mess with pointers and references
      CLOSED: [2018-09-25 Tue 22:02]
 ** TODO make org file for normal stuff (i.e. homework), set it to open at annoying times 
-** TODO read and understand poco documentation
+** DONE read and understand poco documentation
+   CLOSED: [2018-10-06 Sat 15:28]
 *** TODO understand network/websocket api
 *** TODO understand json api (read from memory, or only from file?)
-** TODO understand connectToServer
+** DONE understand connectToServer
+   CLOSED: [2018-10-06 Sat 15:28]
 * C++ Frontend Analysis
 ** Client 
 *** did I connect to the server correctly
@@ -76,8 +78,7 @@ When server receives username, name is sent to all clients. Clients must add nam
 Client will know based off of json tags, who is a user vs other stuff, like messages
                                                                                                       
 
-* Client.h
-** parse json tags to determine what is message, user, etc
+* Client.h** parse json tags to determine what is message, user, etc
 *** if message: pass to model with get message method
 *** if new user: pass to model with get new user method
 ** connect to server
@@ -85,10 +86,17 @@ Client will know based off of json tags, who is a user vs other stuff, like mess
 **** if json doesn't have correct keys/values: print entire json to error file
 *** send disconnect
 
+
+* guiFactory.h
+** virtual or override functions?
+
 * Deadline today
-** finish client.h
-** rename to network.h
-** begin testing network.h with virtual network
+** DONE finish client.h
+   CLOSED: [2018-10-06 Sat 15:27]
+** DONE rename to network.h
+   CLOSED: [2018-10-06 Sat 15:27]
+** TODO begin testing network.h with virtual network
+** TODO Design factory method for gui, work on ncurses version
 
 client needs to send all messages to model
 Model needs to distinguish between local user message (to be sent) and remote user message (to be printed)
