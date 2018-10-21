@@ -3,9 +3,10 @@
 
 class GuiFactory{
  public:
+  virtual void printMessage()=0;
 
- private:
-  
+  virtual void printNewUser()=0;
+
 };
 
 #endif

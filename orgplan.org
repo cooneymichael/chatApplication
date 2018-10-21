@@ -1,3 +1,4 @@
+
 * todo
 ** TODO finish creating chat frontend
 *** DONE analyze what needs to be done 
@@ -89,6 +90,13 @@ Client will know based off of json tags, who is a user vs other stuff, like mess
 
 * guiFactory.h
 ** virtual or override functions?
+*** virtual functions that use the override keyword
+** what methods will I need 
+*** does the scrolling in ncurses need to be done manually?
+*** print message to window
+*** print new user to window
+*** maybe add more later
+**** Get the data types for each method 
 
 * Deadline today
 ** DONE finish client.h
