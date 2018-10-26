@@ -94,9 +94,34 @@ Client will know based off of json tags, who is a user vs other stuff, like mess
 ** what methods will I need 
 *** does the scrolling in ncurses need to be done manually?
 *** print message to window
+**** needs message as input, taken from controller how?
+**** does input need to be pointer to string? (probably)
+**** what will this return
 *** print new user to window
+**** needs user as string as input, taken from controller how?
+**** input probably needs to be passed as and taken as pointer.
+**** what will this return
 *** maybe add more later
 **** Get the data types for each method 
+
+view also needs to accept a window as input, for waddwstr
+
+the model takes in information from both the controller and from the network class (part of controller? kinda.)
+how do I get that info from the model to the view using the controller. That'll be written in the .cpp file for the gui,
+right now I just need to figure out what type of information the view class will accept as input.
+
+Okay, so the get method for a message takes a tuple containing the content and user, returns it.  The view 
+needs to unpackage the tuple and print it (maybe not unpackage, just use indexes, remove tuple)
+
+**** New Pargraph 
+The ui factory class should not be the way it is. Requires everything (name, return, params, etc) to match; impractical
+for what we're trying to do.  Need to find a way to do it differently. Review what a factory class is.
+
+Abstract Factory method:
+create an abstract class for the general design(ui), then an abstract class for each specific design(ncurses, gtk), 
+then a concrete class for the widgets themselves.
+
+^***
 
 * Deadline today
 ** DONE finish client.h
