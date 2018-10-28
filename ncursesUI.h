@@ -28,29 +28,27 @@ public:
 
   void AddMessage(std::tuple<std::string, std::string> messageAndUser, \
 		  int iterator, WINDOW *win) {
-    //use waddwstr to print message from a user
-    //TODO: unpack tuple, mv to window, mv cursor to correct position, rename vars
+    std::string message = messageAndUser[0];
+    int numLines = 0;
 
-    std::string x2 = x.substr(0, iterator);
-    std::cout << "\"" << x <<"\"" << " ::: " << "\"" << x2 << "\"" << std::endl;
+    while (message.length > n){
+      std::string substr = message.substr(0, iterator);
+          
+      std::list<std::string> messageList;
+      messageList.push_back(substr);
+      message.erase(0, iterator);
+      numLines += 1;
+    }
+
+    messageList.push_back(message);
     
-    std::list<std::string> messageList;
-    messageList.push_back(x2);
-    x.erase(0, iterator);
-    std::cout << "\"" << x <<"\"" << " ::: " << "\"" << x2 << "\"" << std::endl;
+    //print to window
     
-    // for addMessage
-    //   -> need a way of keeping track of where to place next message in window
-    // 	   -> how?
-    // 	   -> go n chars into string, then backtrack to first space found
-    // 	   -> create a substring from that point forward (while str.length !> n)
-    // 	   -> assign to variable, assign all substrings to a vector (?)
-    // 	   -> print each vector element to screen
-	   
-    // 	   -> cut string from 0 to n chars in
-    // 	   -> add that portion to vector
+    for(numLines; numLines >=0; numLines--){
+      mvwaddstr(win, linesUsedInWindow + 1, 1, messageList.front());
+      lineUsedInWindow += 1;
 
-
+    }
   }
   
   void UpdateUsers(){
@@ -68,6 +66,10 @@ public:
     //I thought I read something about ncurses not scrolling automatically,
     //so if I need to do it manually, this will do
   }
+
+private:
+  //the amount of lines that text has been printed to in the whole window.
+  int linesUsedInWindow = 0; 
 
 };
 
