@@ -30,6 +30,7 @@ public:
 
   void AddMessage(std::tuple<std::string, std::string> messageAndUser, \
 		  int iterator, WINDOW *win) {
+    //TODO: don't forget to print username with message
     std::string message = messageAndUser[0];
     int numLines = 0;
 
@@ -45,11 +46,23 @@ public:
     messageList.push_back(message);
     
     //print to window
-    
-    for(numLines; numLines >=0; numLines--){
-      mvwaddstr(win, linesUsedInWindow + 1, 1, messageList.front());
-      lineUsedInWindow += 1;
-
+    try{
+      mvwaddstr(win, linesUsedInWindow + 1, 1, messageAndUser[1]);
+      linesUsedInWindow += 1;		
+      for(numLines; numLines >=0; numLines--){
+	mvwaddstr(win, linesUsedInWindow + 1, 1, messageList.front());
+	lineUsedInWindow += 1;
+	
+      }
+    }catch(int ERR){
+      scrollMessages(win, messageList.size() + 2);
+      mvwaddstr(win, linesUsedInWindow + 1, 1, messageAndUser[1]);
+      linesUsedInWindow += 1;		
+      for(numLines; numLines >=0; numLines--){
+	mvwaddstr(win, linesUsedInWindow + 1, 1, messageList.front());
+	lineUsedInWindow += 1;
+	
+      }
     }
   }
   
@@ -61,6 +74,7 @@ public:
       std::string usernameAsString = usernamesInVector.front();
       mvwaddnstr(win, yCoord, 1, usernameAsString, numberOfCharactersToWrite);
       
+    }
   }
 
   void GetMessage(){
@@ -72,10 +86,11 @@ public:
     
   }
 
-  void ScrollMessages(){
-    //I don't know if I actually need this method
-    //I thought I read something about ncurses not scrolling automatically,
-    //so if I need to do it manually, this will do
+  void ScrollMessages(WINDOW* win, int numLinesToScroll){
+    //scrolling ncurses when needed
+    scrollok(win, TRUE);
+    wscrl(win, numLinesToScroll);
+    
   }
 
 private:
