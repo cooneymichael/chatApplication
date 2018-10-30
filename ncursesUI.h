@@ -2,6 +2,8 @@
 #define NCURSES_UI_CHAT
 
 #include "guiFactory.h"
+#include "chatModel.h"
+#include <vector>
 #include <curses.h>
 #include <tuple>
 
@@ -51,14 +53,23 @@ public:
     }
   }
   
-  void UpdateUsers(){
-    //add new users to chat, add usernames to screen, or remove from chat and from screen
-    //adding new user done by network; but making them visible is done by this
+  void UpdateUsers(std::vector usernamesInVector, WINDOW* win, int numberOfCharactersToWrite){
+    //when list of users changes, rewrite list of users. 
+    int yCoord = 0;
+    for(int i=0; i<usernamesInVector.size; i++){
+      yCoord +=1
+      std::string usernameAsString = usernamesInVector.front();
+      mvwaddnstr(win, yCoord, 1, usernameAsString, numberOfCharactersToWrite);
+      
   }
 
   void GetMessage(){
-    //get message from model
-    //part of controller
+    //part of controller -> should be removed from this class later? yes
+    //should be declared in code
+    nocbreak();
+    std::string localUserMessage = getstr();
+    chatModel::setLocalUserMessage(localUserMessage);
+    
   }
 
   void ScrollMessages(){
