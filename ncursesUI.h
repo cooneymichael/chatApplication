@@ -3,9 +3,10 @@
 
 #include "guiFactory.h"
 #include "chatModel.h"
-#include <vector>
 #include <curses.h>
+#include <vector>
 #include <tuple>
+#include <list>
 
 class NcursesUI : public GuiFactory{
 public:
@@ -31,13 +32,13 @@ public:
   void AddMessage(std::tuple<std::string, std::string> messageAndUser, \
 		  int iterator, WINDOW *win) {
     //TODO: don't forget to print username with message
-    std::string message = messageAndUser[0];
+    std::string message = std::get<0>(messageAndUser);
+    std::list<std::string> messageList;
     int numLines = 0;
 
-    while (message.length > n){
+    while (message.length() > iterator){
       std::string substr = message.substr(0, iterator);
           
-      std::list<std::string> messageList;
       messageList.push_back(substr);
       message.erase(0, iterator);
       numLines += 1;
@@ -45,46 +46,59 @@ public:
 
     messageList.push_back(message);
     
-    //print to window
+    /*print to window*/
+    //convert string to c_str
+    
+    // std::string user = std::get<1>(messageAndUser);
+    // const char* cstr = user.c_str();
+
+    const char* userAsCstr = convertFromStringToCstr(std::get<1>(messageAndUser));
+
     try{
-      mvwaddstr(win, linesUsedInWindow + 1, 1, messageAndUser[1]);
+      mvwaddstr(win, linesUsedInWindow + 1, 1, userAsCstr);
       linesUsedInWindow += 1;		
       for(numLines; numLines >=0; numLines--){
-	mvwaddstr(win, linesUsedInWindow + 1, 1, messageList.front());
-	lineUsedInWindow += 1;
+	mvwaddstr(win, linesUsedInWindow + 1, 1, convertFromStringToCstr(messageList.front()));
+	linesUsedInWindow += 1;
 	
       }
-    }catch(int ERR){
-      scrollMessages(win, messageList.size() + 2);
-      mvwaddstr(win, linesUsedInWindow + 1, 1, messageAndUser[1]);
+    }catch(int errorCode){
+      ScrollMessages(win, messageList.size() + 2);
+      mvwaddstr(win, linesUsedInWindow + 1, 1, userAsCstr);
       linesUsedInWindow += 1;		
       for(numLines; numLines >=0; numLines--){
-	mvwaddstr(win, linesUsedInWindow + 1, 1, messageList.front());
-	lineUsedInWindow += 1;
+	mvwaddstr(win, linesUsedInWindow + 1, 1, convertFromStringToCstr(messageList.front()));
+	linesUsedInWindow += 1;
 	
       }
     }
   }
-  
-  void UpdateUsers(std::vector usernamesInVector, WINDOW* win, int numberOfCharactersToWrite){
+
+  const char* convertFromStringToCstr(std::string str){
+     const char* cstr = str.c_str();
+     return cstr;
+  }
+
+  void UpdateUsers(std::vector<std::string> usernamesInVector, WINDOW* win, int numberOfCharactersToWrite){
     //when list of users changes, rewrite list of users. 
     int yCoord = 0;
-    for(int i=0; i<usernamesInVector.size; i++){
-      yCoord +=1
-      std::string usernameAsString = usernamesInVector.front();
-      mvwaddnstr(win, yCoord, 1, usernameAsString, numberOfCharactersToWrite);
+    for(int i=0; i<usernamesInVector.size(); i++){
+      yCoord +=1;
+      std::string usernameAsString = convertFromStringToCstr(usernamesInVector.front());
+      mvwaddnstr(win, yCoord, 1, convertFromStringToCstr(usernameAsString), numberOfCharactersToWrite);
       
     }
   }
 
-  void GetMessage(){
-    //part of controller -> should be removed from this class later? yes
-    //should be declared in code
-    nocbreak();
-    std::string localUserMessage = getstr();
-    chatModel::setLocalUserMessage(localUserMessage);
+  // void GetMessage(){
+  //   //part of controller -> should be removed from this class later? yes
+  //   //should be declared in code
+  //   nocbreak();
+  //   char* localUserMessage;
+  //   getstr(localUserMessage);
+  //   _chatModel->setLocalUserMessage(localUserMessage);
     
-  }
+  // }
 
   void ScrollMessages(WINDOW* win, int numLinesToScroll){
     //scrolling ncurses when needed
@@ -95,8 +109,10 @@ public:
 
 private:
   //the amount of lines that text has been printed to in the whole window.
-  int linesUsedInWindow = 0; 
-
+  int linesUsedInWindow = 0;
+  //hack because ncurses ERR was causing compiler error
+  int errorCode = -1;
+  //chatModel* _chatModel;
 };
 
 

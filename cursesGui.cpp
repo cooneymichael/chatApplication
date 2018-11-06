@@ -2,54 +2,59 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include <vector>
 
 int count();
 //don't forget to link -lncurses
 
 int main(){
 
-  initscr();
-  nocbreak();
-  if (!has_colors() && !can_change_color()){
-      endwin();
-      std::cout << "Terminal does not support colors" << std::endl;
-    }
+  // initscr();
+  // nocbreak();
+  // if (!has_colors() && !can_change_color()){
+  //     endwin();
+  //     std::cout << "Terminal does not support colors" << std::endl;
+  //   }
   
-  //write a string to screen; white foreground, red background
+  // //write a string to screen; white foreground, red background
 
-  start_color();
-  init_pair(1, COLOR_WHITE, COLOR_RED);
-  attron(COLOR_PAIR(1));
+  // start_color();
+  // init_pair(1, COLOR_WHITE, COLOR_RED);
+  // attron(COLOR_PAIR(1));
 
-  // WINDOW* myWin = newwin(20, 20, 6, 6);
-  // box(myWin, '#', 0);
+  // // WINDOW* myWin = newwin(20, 20, 6, 6);
+  // // box(myWin, '#', 0);
   
-  // mvwaddstr(myWin, 1, 1, "Hello World, I am a string longer than 10 characters :)");
-  // wrefresh(myWin);
-  // wgetch(myWin);
+  // // mvwaddstr(myWin, 1, 1, "Hello World, I am a string longer than 10 characters :)");
+  // // wrefresh(myWin);
+  // // wgetch(myWin);
 
-  addstr("Please Enter Something about 10 characters long: ");
-  refresh();
-  keypad(stdscr, TRUE);
-  char *input;
-  while (getch() != 10){
-    getnstr(input, 5);
+  // addstr("Please Enter Something about 10 characters long: ");
+  // refresh();
+  // keypad(stdscr, TRUE);
+  // char *input;
+  // while (getch() != 10){
+  //   getnstr(input, 5);
     
-  }
+  // }
 
-  addstr(input);
-  refresh();
+  // addstr(input);
+  // refresh();
 
-  getch();
+  // getch();
 
-  endwin();
+  // endwin();
   
   // int i =5;
   // for(i; i>=0; i--){
   //   std::cout << i << std::endl;
   // }
   
+  std::string str = "This is my string";
+  std::cout << str << std::endl;
   
+  const char* cstr = str.c_str();
+  std::cout << cstr << std::endl;
 
   return 0;
 

@@ -142,3 +142,20 @@ push into vector of tuples
 
 use stringify to print entire object to error file
 needs ostream, put ostream in file?
+* config and parser
+** TODO create a parser for a configuration file
+** what is the syntax for the configuration file
+*** no whitespace between the equal sign and value/key 
+*** terminate with semicolon (?, is this necessary?)
+*** if line begins with '#', don't read it
+** how to implement it
+*** create a header file with necessary methods
+*** create .cpp file for actually parsing
+**** read up to the '='(method), use 'if' statements to determine variable being set (controller)
+**** read after '=' to newline(method), use to set variable (controller)
+*** For confParser.cpp
+**** can't use main function, use namespace instead -> accessable in main function
+**** function for determining what value is associated with what variable
+**** function params -> var to search for
+**** return -> value to set
+**** should this function also include a way to set those variables (no, that wouldn't make any sense)
